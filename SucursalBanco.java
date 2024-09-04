@@ -38,14 +38,15 @@ public class SucursalBanco {
 
     static public void showMainMenu() {
 
-        System.out.println("MENU PRINCIPAL");
-        System.err.println("Selecciona una opcion: ");
-
-        System.out.println("1 - CREAR CLIENTE");
-        System.out.println("2 - CREAR CUENTA");
-        System.out.println("3 - MANTENIMIENTO DE CUENTA");
-        System.out.println("4 - SALIR");
-
+        String s = """
+                MENU PRINCIPAL 
+                Selecciona una opcion
+                1 - CREAR CLIENTE
+                2 - CREAR CUENTA
+                3 - SELECCIONAR CUENTA
+                4 - SALIR
+                """;
+                System.out.println(s);
     }
 
     static public void cuentaMenu() {
@@ -90,6 +91,7 @@ public class SucursalBanco {
 
         cuentas.add(new Cuenta(contadorCuenta++, 0, cliente));
     }
+
     //Creamos un metodo de la clase cliente que valida si el cliente esta en el array de clientes. Le pasamos un parametro a comprar.
     static Cliente validarCliente(String nombre) {
         for (Cliente c : clientes) {
@@ -99,16 +101,17 @@ public class SucursalBanco {
         }
         return null;
     }
+
     static void seleccionarCuenta() {
         if (cuentas.isEmpty()) {
             System.out.println("No hay ninguna cuenta. ");
             return;
         }
-        
+
         int numCuenta;
         do {
             System.out.println("Seleciona un numero de cuenta");
-            for(Cuenta c: cuentas){
+            for (Cuenta c : cuentas) {
                 System.out.println(c.toString());
             }
             numCuenta = Integer.parseInt(entrada.nextLine());
@@ -116,16 +119,48 @@ public class SucursalBanco {
         seleccionarOpcionCuenta();
 
     }
-      static boolean validarCuenta(int numCuenta){
-        for (Cuenta c : cuentas){
-            if(c.getNumeroCuenta() == numCuenta){
+
+    static boolean validarCuenta(int numCuenta) {
+        for (Cuenta c : cuentas) {
+            if (c.getNumeroCuenta() == numCuenta) {
                 cuentaActiva = c;
                 return true;
             }
         }
         return false;
     }
-    static void seleccionarOpcionCuenta(){
-        cuentaActiva.showAllData();
+
+    static void seleccionarOpcionCuenta() {
+
+        int opcionCuenta = 0;
+        while(opcionCuenta != 4){
+            cuentaMenu();
+            opcionCuenta = Integer.parseInt(entrada.nextLine());
+            switch (opcionCuenta) {
+                case 1:
+                    ingresar();
+                    break;
+                case 2:
+                    retirar();
+                    break;
+                case 3:
+                    cuentaActiva.showAllData();
+                    break;
+                case 4: System.out.println("Volviendo al menu principal");
+                default:
+                System.out.println("Opcion no valida");
+            }
+        }
+
+    }
+    static void ingresar(){
+        System.out.println("Indica la cantidad que quieres ingresar: ");
+        int cantidad = Integer.parseInt(entrada.nextLine());
+        cuentaActiva.ingreso(cantidad);
+    }
+    static void retirar(){
+        System.out.println("Indica la cantidad que quieres retirar: ");
+        int cantidad = Integer.parseInt(entrada.nextLine());
+        cuentaActiva.retiro(cantidad);
     }
 }
