@@ -39,24 +39,30 @@ public class SucursalBanco {
     static public void showMainMenu() {
 
         String s = """
+
                 MENU PRINCIPAL 
                 Selecciona una opcion
                 1 - CREAR CLIENTE
                 2 - CREAR CUENTA
                 3 - SELECCIONAR CUENTA
                 4 - SALIR
+
                 """;
                 System.out.println(s);
     }
 
     static public void cuentaMenu() {
-        System.out.println("MENU CUENTA");
-        System.out.println("Selecciona una opcion: ");
+        String s = """
 
-        System.out.println("1 - Ingresar");
-        System.out.println("2- Retirar");
-        System.out.println("3 - Ver datos cuenta");
-        System.out.println("4 - Volver al menu principal");
+                MENU DE CLIENTE
+                Selecciona una opcion: 
+                1 - Ingresar dinero.
+                2 - Retirar dinero.
+                3 - Ver datos de la cuenta.
+                4 - Salir al MENU PRINCIPAL.
+
+                """;
+                System.out.println(s);
     }
 
     static void crearCliente() {
@@ -68,8 +74,9 @@ public class SucursalBanco {
         String direccion = entrada.nextLine();
         System.out.println("Escribe la localidad del cliente: ");
         String localidad = entrada.nextLine();
-
+        System.out.println("👍🏽👍🏽CLIENTE CREADO CON EXITO!!👍🏽👍🏽");
         clientes.add(new Cliente(nombre, apellido, direccion, localidad));
+        
     }
 
     static void crearCuenta() {
@@ -88,8 +95,9 @@ public class SucursalBanco {
             nombre = entrada.nextLine();
             cliente = validarCliente(nombre);
         } while (cliente == null);
-
+        System.out.println("👌🏽👌🏽CUENTA CREADA CON EXITO!!👌🏽👌🏽");
         cuentas.add(new Cuenta(contadorCuenta++, 0, cliente));
+        
     }
 
     //Creamos un metodo de la clase cliente que valida si el cliente esta en el array de clientes. Le pasamos un parametro a comprar.
@@ -144,7 +152,7 @@ public class SucursalBanco {
                     retirar();
                     break;
                 case 3:
-                    cuentaActiva.showAllData();
+                    System.out.println(cuentaActiva.showAllData());;
                     break;
                 case 4: System.out.println("Volviendo al menu principal");
                 default:

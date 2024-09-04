@@ -58,7 +58,7 @@ public class Cuenta {
         }
         saldo += cantidad;
         moves.add(new Moves(LocalDateTime.now(), cantidad, Moves.INGRESO));
-        System.out.println("Se ingresado correctamente " + cantidad + "€" + "en la cuenta");
+        System.out.println("Se ingresado correctamente " + cantidad + "€ en la cuenta");
     }
 
     public void retiro(double cantidad) {
@@ -79,19 +79,24 @@ public class Cuenta {
         return s;
     }
 
-    public void showAllData() {
-        System.out.println("Numero de cuenta: " + numeroCuenta);
-        System.out.println(titular.nombreCompleto());
-        System.out.println("Direccion: "+ titular.getDireccion());
-        System.out.println("Localidad: " + titular.getLocalidad());
-        System.out.println("Saldo: " + saldo);
-        System.out.println("-------------------------MOVIMIENTOS---------------------------");
-        System.out.println(obtenerMoves());
+    public String showAllData() {
+
+        return
+        "Numero de cuenta: " + numeroCuenta + "\n"
+        + "Titular: " + titular.nombreCompleto() + "\n"
+        + "Direccion: " + titular.getDireccion() + "\n"
+        + "Localidad:" + titular.getLocalidad() + "\n"
+        + "Saldo: " + saldo + "\n"
+        + "-------------------------MOVIMIENTOS--------------------------- \n"
+        + obtenerMoves();
+        
     }
 
     @Override
     public String toString() {
-        return "Cuenta [numeroCuenta=" + numeroCuenta + ", titular=" + titular.nombreCompleto() + "]";
+        return "Numero de Cuenta: " + numeroCuenta + "\n" 
+        + "Titular: " + titular.nombreCompleto() + "\n" 
+        + "-------------------------------";
     }
 
     private class Moves {
