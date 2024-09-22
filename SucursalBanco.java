@@ -48,7 +48,7 @@ public class SucursalBanco {
                 4 - SALIR
 
                 """;
-                System.out.println(s);
+        System.out.println(s);
     }
 
     static public void cuentaMenu() {
@@ -62,7 +62,21 @@ public class SucursalBanco {
                 4 - Salir al MENU PRINCIPAL.
 
                 """;
-                System.out.println(s);
+        System.out.println(s);
+    }
+
+    static public void menuTipoCuenta() {
+        String s = """
+
+                QUE TIPO DE CUENTA QUIERES CREAR?: 
+                Selecciona una opcion: 
+                1 - Crear Cuenta Corriente.
+                2 - Crear Cuenta Vivienda.
+                3 - Crear Fondo de Inversion.
+                4 - Salir al MENU PRINCIPAL.
+
+                """;
+        System.out.println(s);
     }
 
     static void crearCliente() {
@@ -76,7 +90,7 @@ public class SucursalBanco {
         String localidad = entrada.nextLine();
         System.out.println("👍🏽👍🏽CLIENTE CREADO CON EXITO!!👍🏽👍🏽");
         clientes.add(new Cliente(nombre, apellido, direccion, localidad));
-        
+
     }
 
     static void crearCuenta() {
@@ -85,29 +99,52 @@ public class SucursalBanco {
             return;
 
         }
+
+        //Obtenemos en cliente
+        Cliente cliente = validarCliente();
+
+        //Obtenemos la cuenta valida.
+        Cuenta cuenta = validarCuenta(cliente);
+
+        cuentas.add(cuenta);
+        System.out.println("👌🏽👌🏽CUENTA CREADA CON EXITO!!👌🏽👌🏽");
+
+    }
+
+    static Cuenta validarCuenta(Cliente c) {
+        int opcion;
+        while (true) {
+            menuTipoCuenta();
+            opcion = Integer.parseInt(entrada.nextLine());
+            switch (opcion) {
+                case 1:
+                    return new CuentaCorriente(contadorCuenta++, c);
+                case 2:
+                    return new CuentaVivienda(contadorCuenta++, c);
+                case 3:
+                    return new FondoInversion(contadorCuenta++, c);
+
+            }
+        }
+    }
+
+    //Creamos un metodo de la clase cliente que valida si el cliente esta en el array de clientes. Le pasamos un parametro a comprar.
+    static Cliente validarCliente() {
+
         String nombre;
-        Cliente cliente;
-        do {
+
+        while (true) {
             System.out.println("Escribe el nombre del cliente para abrir una cuenta nueva");
             for (Cliente c : clientes) {
                 System.out.println(c.getNombre());
             }
             nombre = entrada.nextLine();
-            cliente = validarCliente(nombre);
-        } while (cliente == null);
-        System.out.println("👌🏽👌🏽CUENTA CREADA CON EXITO!!👌🏽👌🏽");
-        cuentas.add(new Cuenta(contadorCuenta++, 0, cliente));
-        
-    }
-
-    //Creamos un metodo de la clase cliente que valida si el cliente esta en el array de clientes. Le pasamos un parametro a comprar.
-    static Cliente validarCliente(String nombre) {
-        for (Cliente c : clientes) {
-            if (c.getNombre().equals(nombre)) {
-                return c;
+            for (Cliente c : clientes) {
+                if (c.getNombre().equals(nombre)) {
+                    return c;
+                }
             }
         }
-        return null;
     }
 
     static void seleccionarCuenta() {
@@ -141,7 +178,7 @@ public class SucursalBanco {
     static void seleccionarOpcionCuenta() {
 
         int opcionCuenta = 0;
-        while(opcionCuenta != 4){
+        while (opcionCuenta != 4) {
             cuentaMenu();
             opcionCuenta = Integer.parseInt(entrada.nextLine());
             switch (opcionCuenta) {
@@ -152,21 +189,25 @@ public class SucursalBanco {
                     retirar();
                     break;
                 case 3:
-                    System.out.println(cuentaActiva.showAllData());;
+                    System.out.println(cuentaActiva.showAllData());
+                    ;
                     break;
-                case 4: System.out.println("Volviendo al menu principal");
+                case 4:
+                    System.out.println("Volviendo al menu principal");
                 default:
-                System.out.println("Opcion no valida");
+                    System.out.println("Opcion no valida");
             }
         }
 
     }
-    static void ingresar(){
+
+    static void ingresar() {
         System.out.println("Indica la cantidad que quieres ingresar: ");
         int cantidad = Integer.parseInt(entrada.nextLine());
         cuentaActiva.ingreso(cantidad);
     }
-    static void retirar(){
+
+    static void retirar() {
         System.out.println("Indica la cantidad que quieres retirar: ");
         int cantidad = Integer.parseInt(entrada.nextLine());
         cuentaActiva.retiro(cantidad);

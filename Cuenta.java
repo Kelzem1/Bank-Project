@@ -5,12 +5,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
-public class Cuenta {
+public abstract class Cuenta {
 
-    private int numeroCuenta;
-    private double saldo;
-    private Cliente titular;
-    private ArrayList<Moves> moves;
+    protected  int numeroCuenta;
+    protected  double saldo;
+    protected  Cliente titular;
+    protected  ArrayList<Moves> moves; 
 
 
     /*CONSTRUCTORES */
@@ -71,7 +71,7 @@ public class Cuenta {
         System.out.println("Se ha retirado correctamente " + cantidad + "€ en la cuenta");
     }
 
-    private String obtenerMoves() {
+    protected  String obtenerMoves() {
         String s = "";
         for (Moves m : moves) {
             s += m.toString() + "\n";
